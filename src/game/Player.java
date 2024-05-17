@@ -21,12 +21,10 @@ public class Player extends CollidableEntity {
 	Renderer renderer;
 	Loader loader;
 	StaticShader mainShader;
-	Vector3f velocity;
 	boolean jumping = false;
 	int time = 0;
 
-	
-	boolean isNowColliding = false;
+
 	public Player(StaticShader shader, Renderer renderer, Loader loader) {
 		super(null, new Vector3f(0, 0, 0), 0, 0, 0, 1);
 		
@@ -43,9 +41,11 @@ public class Player extends CollidableEntity {
 		velocity = new Vector3f(0,0,0);
 		Box box = new Box(position, new Vector3f(1,1,1));
 		
-
 		
 		setCollisionShape(box);
+		
+		CollisionWorld.AddCollidableEntityToWorld(this);
+		name = "PLAYER";
 	}
 	
 	public void update() {
@@ -71,7 +71,7 @@ public class Player extends CollidableEntity {
 
 		position = Maths.addVector(velocity, position);
 		
-		manageCollisions();
+		manageCollisions(name);
 		
 	}
 
@@ -98,57 +98,6 @@ public class Player extends CollidableEntity {
 		}
 	}
 	
-	void manageCollisions() {
-		for (CollidableEntity e : CollisionWorld.GetAllCollidableEntities()) {
-			isNowColliding = isColliding(e);
-			Vector3f oldPosition = new Vector3f(position.x, position.y, position.z);
-			if (isNowColliding) {
-				
-				position.x -= velocity.x;
-				if (!isColliding(e)) {
-					velocity.x = 0;
-				} else {
-					position.x = oldPosition.x;
-				}
-				
-				position.y -= velocity.y;
-				if (!isColliding(e)) {
-					velocity.y = 0;
-				} else {
-					position.y = oldPosition.y;
-				}
-				
-				position.z -= velocity.z;
-				if (!isColliding(e)) {
-					velocity.z = 0;
-				} else {
-					position.z = oldPosition.z;
-				}
-				// ggs
-				position.x += velocity.x;
-				if (!isColliding(e)) {
-					velocity.x = 0;
-				} else {
-					position.x = oldPosition.x;
-				}
-				
-				position.y += velocity.y;
-				if (!isColliding(e)) {
-					velocity.y = 0;
-				} else {
-					position.y = oldPosition.y;
-				}
-				
-				position.z += velocity.z;
-				if (!isColliding(e)) {
-					velocity.z = 0;
-				} else {
-					position.z = oldPosition.z;
-				}
-				position = Maths.addVector(velocity, position);
-			}
-		}
-	}
 	
 
 	public void render() {

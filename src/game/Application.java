@@ -18,6 +18,7 @@ import renderEngine.OBJLoader;
 import renderEngine.Renderer;
 import shaders.StaticShader;
 import textures.ModelTexture;
+import toolbox.Maths;
 
 public class Application {
 	
@@ -67,7 +68,7 @@ public class Application {
 		
 		box2 = new Box(testEntity.getPosition(), new Vector3f(2f,1f,2f));
 		testEntity.setCollisionShape(box2);
-		
+		testEntity.velocity = new Vector3f(0,0,0);
 		CollisionWorld.AddCollidableEntityToWorld(testEntity);
 		
 	}
@@ -75,10 +76,12 @@ public class Application {
 	private void loop() {
 		while (!Display.isCloseRequested()) {
 			
-			
 			//game logic
 			
 			//entity.increaseRotation(0, 0.5f, 0);
+			testEntity.velocity.x -= 0.00005f;
+			testEntity.position = Maths.addVector(testEntity.position, testEntity.velocity);
+			testEntity.manageCollisions("NULL");
 			player.update();
 			camera.move();
 			//rendering

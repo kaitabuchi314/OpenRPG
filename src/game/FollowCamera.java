@@ -16,6 +16,9 @@ public class FollowCamera extends Camera {
     private float lastMouseX;
     private float lastMouseY;
 
+    
+
+    
     public FollowCamera(Player player, Vector3f position, float pitch, float yaw, float roll) {
         super(position, pitch, yaw, roll);
         this.player = player;
