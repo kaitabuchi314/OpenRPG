@@ -38,6 +38,13 @@ public class Maths {
 		v.z += b.z;
 		return v;
 	}
+	public static Vector3f subVector(Vector3f a, Vector3f b) {
+		Vector3f v = new Vector3f(a.x, a.y, a.z);
+		v.x -= b.x;
+		v.y -= b.y;
+		v.z -= b.z;
+		return v;
+	}
 	
     public static Vector3f calculateForwardVector(Entity entity) {
         // Convert rotation angles to radians

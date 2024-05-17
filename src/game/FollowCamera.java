@@ -35,11 +35,11 @@ public class FollowCamera extends Camera {
 
         calculateCameraPosition(horizontalDistance, verticalDistance);
 
-        yaw = 180 - (player.getRotY() + angleAroundPlayer);
+        yaw = 180 - (angleAroundPlayer);
     }
 
     private void calculateCameraPosition(float horizontalDistance, float verticalDistance) {
-        float theta = player.getRotY() + angleAroundPlayer;
+        float theta = angleAroundPlayer;
         float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
         float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 

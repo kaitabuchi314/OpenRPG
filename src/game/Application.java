@@ -6,6 +6,9 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import game.collision.Box;
+import game.collision.CollidableEntity;
+import game.collision.CollisionWorld;
 import game.terrain.Terrain;
 import models.RawModel;
 import models.TexturedModel;
@@ -22,10 +25,11 @@ public class Application {
 	StaticShader shader;
 	Renderer renderer;
 	Light light;
-	Entity entity;
 	FollowCamera camera;
 	Player player;
 	Terrain terrain;
+	Box box2;
+	CollidableEntity testEntity;
 	public void run() {
 		init();
 		loop();
@@ -48,17 +52,23 @@ public class Application {
 		
 		shader.addLight(light);
 		
-		RawModel model = OBJLoader.loadObjModel("Resources/stall.obj", loader);
-		ModelTexture texture = new ModelTexture(loader.loadTexture("Resources/stallTexture.png"));
-		TexturedModel texturedModel = new TexturedModel(model, texture);
-		
-		entity = new Entity(texturedModel, new Vector3f(20, 0,13),0,195,0,1f);
-		
-		terrain = new Terrain(loader, new Vector3f(0,0,0),10, 10);
+		terrain = new Terrain(loader, new Vector3f(0,0,0), 10);
 		
 		player = new Player(shader, renderer, loader);
 
 		camera = new FollowCamera(player, new Vector3f(0, 0, 0), 0, 0, 0) ;
+		
+		
+		RawModel testmodel = OBJLoader.loadObjModel("Resources/box.obj", loader);
+		ModelTexture testtexture = new ModelTexture(loader.loadTexture("Resources/grass.png"));
+		TexturedModel testtexturedModel = new TexturedModel(testmodel, testtexture);
+		
+		testEntity = new CollidableEntity(testtexturedModel, new Vector3f(17,0,12), 0,0,0,1);
+		
+		box2 = new Box(testEntity.getPosition(), new Vector3f(2f,1f,2f));
+		testEntity.setCollisionShape(box2);
+		
+		CollisionWorld.AddCollidableEntityToWorld(testEntity);
 		
 	}
 	
@@ -79,9 +89,8 @@ public class Application {
 			shader.start();
 			shader.loadViewMatrix(camera);
 			terrain.render(renderer, shader);
+			testEntity.render(renderer, shader);
 			player.render();
-
-			renderer.render(entity, shader);
 			
 			shader.stop();
 			DisplayManager.updateDisplay();

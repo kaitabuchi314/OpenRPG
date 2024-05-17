@@ -41,10 +41,8 @@ public class Loader {
 		try {
 			texture = TextureLoader.getTexture("PNG", new FileInputStream(fileName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
