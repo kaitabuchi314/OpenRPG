@@ -1,0 +1,38 @@
+#version 400 core
+
+in vec2 pass_textureCoords;
+in vec3 surfaceNormal;
+in vec3 toLightVector;
+in vec4 vertPos;
+
+out vec4 out_Color;
+
+uniform sampler2D textureSampler;
+uniform vec3 lightColor;
+uniform float ambientLight;
+
+void main(void) {
+	
+	vec4 tx = texture(textureSampler, pass_textureCoords);
+	vec3 unitNormal = normalize(surfaceNormal);
+	vec3 unitLightVector = normalize(toLightVector);
+	
+	float nDot1 = dot(unitNormal, unitLightVector);
+	float brightness = max(nDot1, ambientLight);
+	vec3 diffuse = brightness*lightColor;
+	
+	if (tx.a > 0.5) {
+		float tsc = distance(vertPos, vec4(0,0,0,0));
+
+		out_Color = vec4(diffuse,1.0)*tx;
+		out_Color.a = 1;
+		out_Color.r += tsc/2500;
+		out_Color.g += tsc/2500;
+		out_Color.b += tsc/2500;
+
+		
+		
+	} else {
+		out_Color = vec4(0,0,0,1);
+	}
+}
