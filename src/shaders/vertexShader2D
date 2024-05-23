@@ -25,5 +25,6 @@ void main(void) {
     // Apply view and projection transformations
     gl_Position = scaledVertPos;
 
-    vertPos = scaledVertPos;
+    vertPos = vertPosOriginal;
+    pass_textureCoords = textureCoords;
 }
