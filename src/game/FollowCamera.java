@@ -60,7 +60,7 @@ public class FollowCamera extends Camera {
     }
 
     private void calculateZoom() {
-        float zoomLevel = Mouse.getDWheel() * 0.1f;
+        float zoomLevel = Mouse.getDWheel() * 0.006f;
         distanceFromPlayerX -= zoomLevel;
         distanceFromPlayerY -= zoomLevel;
 

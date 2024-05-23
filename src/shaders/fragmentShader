@@ -29,10 +29,8 @@ void main(void) {
 		out_Color.r += tsc/2500;
 		out_Color.g += tsc/2500;
 		out_Color.b += tsc/2500;
-
-		
 		
 	} else {
-		out_Color = vec4(0,0,0,1);
+		discard;
 	}
 }

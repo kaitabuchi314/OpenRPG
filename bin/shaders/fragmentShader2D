@@ -1,0 +1,26 @@
+#version 400 core
+
+in vec2 pass_textureCoords;
+in vec3 surfaceNormal;
+in vec3 toLightVector;
+in vec4 vertPos;
+
+out vec4 out_Color;
+
+uniform sampler2D textureSampler;
+uniform vec3 lightColor;
+uniform float ambientLight;
+
+void main(void) {
+	
+	vec4 tx = texture(textureSampler, pass_textureCoords);
+
+	if (tx.a > 0.5) {
+
+		out_Color = tx;
+		out_Color.a = 1;
+		
+	} else {
+		out_Color = vec4(0,0,0,1);
+	}
+}

@@ -3,19 +3,20 @@ package game;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import game.collision.Box;
 import game.collision.CollidableEntity;
 import game.collision.CollisionWorld;
 import game.terrain.Terrain;
+import game.ui.Sprite2D;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.OBJLoader;
 import renderEngine.Renderer;
+import shaders.Shader2D;
 import shaders.StaticShader;
 import textures.ModelTexture;
 import toolbox.Maths;
@@ -31,6 +32,9 @@ public class Application {
 	Terrain terrain;
 	Box box2;
 	CollidableEntity testEntity;
+	Entity grass;
+	Sprite2D sprite;
+	Shader2D shader2D;
 	public void run() {
 		init();
 		loop();
@@ -70,6 +74,16 @@ public class Application {
 		testEntity.setCollisionShape(box2);
 		testEntity.velocity = new Vector3f(0,0,0);
 		CollisionWorld.AddCollidableEntityToWorld(testEntity);
+		sprite = new Sprite2D(loader, "Resources/grass.png", new Vector3f(0,-8.5f,0), new Vector3f(0.35f, 0.1f, 0.0f));
+		shader2D = new Shader2D();
+		
+		
+		RawModel model = OBJLoader.loadObjModel("Resources/grass.obj", loader);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("Resources/flower.png"));
+		TexturedModel texturedModel = new TexturedModel(model, texture);
+		
+		grass = new Entity(texturedModel, new Vector3f(5,-2,-10), 0, 0, 0, 3f);
+		
 		
 	}
 	
@@ -91,11 +105,26 @@ public class Application {
 			
 			shader.start();
 			shader.loadViewMatrix(camera);
+
+			renderer.render(grass, shader);
+
 			terrain.render(renderer, shader);
 			testEntity.render(renderer, shader);
 			player.render();
 			
+			
+			
+			
 			shader.stop();
+			
+			shader2D.start();
+			
+			//ui render
+			
+			sprite.render(camera, renderer, shader2D);
+			
+			shader2D.stop();
+			
 			DisplayManager.updateDisplay();
 			
 		}
