@@ -21,6 +21,6 @@ void main(void) {
 		out_Color.a = 1;
 		
 	} else {
-		out_Color = vec4(0,0,0,1);
+		discard;
 	}
 }

@@ -4,7 +4,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
-import entities.Entity;
 
 public class FollowCamera extends Camera {
     private Player player;

@@ -1,4 +1,4 @@
-package game.ui;
+package ui;
 
 import org.lwjgl.util.vector.Vector3f;
 

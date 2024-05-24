@@ -9,7 +9,6 @@ import game.collision.Box;
 import game.collision.CollidableEntity;
 import game.collision.CollisionWorld;
 import game.terrain.Terrain;
-import game.ui.Sprite2D;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.DisplayManager;
@@ -20,6 +19,8 @@ import shaders.Shader2D;
 import shaders.StaticShader;
 import textures.ModelTexture;
 import toolbox.Maths;
+import ui.Panel;
+import ui.Sprite2D;
 
 public class Application {
 	
@@ -33,7 +34,9 @@ public class Application {
 	Box box2;
 	CollidableEntity testEntity;
 	Entity grass;
-	Sprite2D sprite;
+	Panel sprite;
+	Panel sprite2;
+
 	Shader2D shader2D;
 	public void run() {
 		init();
@@ -74,7 +77,13 @@ public class Application {
 		testEntity.setCollisionShape(box2);
 		testEntity.velocity = new Vector3f(0,0,0);
 		CollisionWorld.AddCollidableEntityToWorld(testEntity);
-		sprite = new Sprite2D(loader, "Resources/grass.png", new Vector3f(0,-8.5f,0), new Vector3f(0.35f, 0.1f, 0.0f));
+		
+		sprite = new Panel(loader, "Resources/ui_panel.png", new Vector3f(-10,-8.5f,0), new Vector3f(0.07f, 0.1f, 0.0f));
+		sprite.AddSubpanel(new Panel(loader, "Resources/image.png", new Vector3f(-17.5f,12.15f,0), new Vector3f(0.04f, -0.07f, 0.0f)));
+		
+		sprite2 = new Panel(loader, "Resources/ui_panel.png", new Vector3f(3.85f,0,0), new Vector3f(0.2f, 0.7f, 0.0f));
+		sprite2.AddSubpanel(new Panel(loader, "Resources/image.png", new Vector3f(19.5f,-6f,0), new Vector3f(0.04f, -0.07f, 0.0f)));
+		
 		shader2D = new Shader2D();
 		
 		
@@ -93,9 +102,9 @@ public class Application {
 			//game logic
 			
 			//entity.increaseRotation(0, 0.5f, 0);
-			testEntity.velocity.x -= 0.00005f;
+			//testEntity.velocity.x -= 0.00005f;
 			testEntity.position = Maths.addVector(testEntity.position, testEntity.velocity);
-			testEntity.manageCollisions("NULL");
+			testEntity.manageCollisions("TestEntity");
 			player.update();
 			camera.move();
 			//rendering
@@ -122,7 +131,8 @@ public class Application {
 			//ui render
 			
 			sprite.render(camera, renderer, shader2D);
-			
+			sprite2.render(camera, renderer, shader2D);
+
 			shader2D.stop();
 			
 			DisplayManager.updateDisplay();
