@@ -26,9 +26,9 @@ void main(void) {
 		
 		out_Color = vec4(diffuse,1.0)*tx;
 		out_Color.a = 1;
-		out_Color.r += tsc/2500;
-		out_Color.g += tsc/2500;
-		out_Color.b += tsc/2500;
+		out_Color.r += tsc/1400;
+		out_Color.g += tsc/800;
+		out_Color.b += tsc/400;
 		
 	} else {
 		discard;
