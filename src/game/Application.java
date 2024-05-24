@@ -115,13 +115,16 @@ public class Application {
 			shader.start();
 			shader.loadViewMatrix(camera);
 
+			shader.loadRepeatScale(1);
+
 			renderer.render(grass, shader);
+			
 
 			terrain.render(renderer, shader);
+			
 			testEntity.render(renderer, shader);
+			
 			player.render();
-			
-			
 			
 			
 			shader.stop();

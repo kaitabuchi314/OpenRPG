@@ -101,6 +101,8 @@ public class Player extends CollidableEntity {
 	
 
 	public void render() {
+		mainShader.loadRepeatScale(1);
+
 		renderer.render(this, mainShader);
 	}
 	

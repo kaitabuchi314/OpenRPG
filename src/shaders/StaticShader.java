@@ -18,6 +18,7 @@ public class StaticShader extends ShaderProgram {
 	private int location_lightPosition;
 	private int location_lightColor;
 	private int location_ambientLight;
+	private int location_repeatScale;
 
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -38,6 +39,8 @@ public class StaticShader extends ShaderProgram {
 		location_lightPosition = super.getUniformLocation("lightPosition");
 		location_lightColor = super.getUniformLocation("lightColor");
 		location_ambientLight = super.getUniformLocation("ambientLight");
+		location_repeatScale = super.getUniformLocation("repeatScale");
+
 	}
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
@@ -60,6 +63,10 @@ public class StaticShader extends ShaderProgram {
 	public void loadViewMatrix(Camera camera) {
 		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix); 
+	}
+	
+	public void loadRepeatScale(float x) {
+		super.loadFloat(location_repeatScale, x);
 	}
 	
 	public void setAmbientLight(float a) {

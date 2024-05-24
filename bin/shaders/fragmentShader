@@ -10,16 +10,18 @@ out vec4 out_Color;
 uniform sampler2D textureSampler;
 uniform vec3 lightColor;
 uniform float ambientLight;
+uniform float repeatScale;
 
 void main(void) {
 	
-	vec4 tx = texture(textureSampler, pass_textureCoords);
+	vec4 tx = texture(textureSampler, pass_textureCoords*vec2(repeatScale, repeatScale));
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 	
 	float nDot1 = dot(unitNormal, unitLightVector);
 	float brightness = max(nDot1, ambientLight);
 	vec3 diffuse = brightness*lightColor;
+	//vec3 diffuse = vec3(1,1,1);
 	
 	if (tx.a > 0.5) {
 		float tsc = distance(vertPos, vec4(0,0,0,0));
