@@ -21,6 +21,7 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Our First Display");
+			Display.setResizable(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
@@ -33,6 +34,9 @@ public class DisplayManager {
 		
 		Display.sync(FPS_CAP);
 		Display.update();
+		if (Display.wasResized()) {
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		}
 		
 	}
 	
