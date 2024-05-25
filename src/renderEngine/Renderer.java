@@ -1,5 +1,8 @@
 package renderEngine;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -21,6 +24,9 @@ public class Renderer {
 	private static final float NEAR_PLANE = 0.001f;
 	private static final float FAR_PLANE = 1000;
 	
+	public static float R = 41f/255f;
+	public static float B = 213f/255f;
+	public static float G = 135f/255f;
 	
 	private Matrix4f projectionMatrix;
 	
@@ -32,13 +38,14 @@ public class Renderer {
 	}
 	
 	public void prepare() {
-		
+	  
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glClearColor(41f/255f, 135f/255f, 213f/255f, 1);
+		GL11.glClearColor(R, G, B, 1);
 		
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		
 	}
 	
 	public void render(Entity entity, StaticShader shader) {

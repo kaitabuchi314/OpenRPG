@@ -19,6 +19,8 @@ public class StaticShader extends ShaderProgram {
 	private int location_lightColor;
 	private int location_ambientLight;
 	private int location_repeatScale;
+	private int location_fogDensity;
+	private int location_fogColor;
 
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -40,7 +42,8 @@ public class StaticShader extends ShaderProgram {
 		location_lightColor = super.getUniformLocation("lightColor");
 		location_ambientLight = super.getUniformLocation("ambientLight");
 		location_repeatScale = super.getUniformLocation("repeatScale");
-
+		location_fogDensity = super.getUniformLocation("fogDensity");
+		location_fogColor = super.getUniformLocation("fogColor");
 	}
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
@@ -69,6 +72,12 @@ public class StaticShader extends ShaderProgram {
 		super.loadFloat(location_repeatScale, x);
 	}
 	
+	public void loadFogDensity(float d) {
+		super.loadFloat(location_fogDensity, d);
+	}
+	public void loadFogColor(Vector3f d) {
+		super.loadVector(location_fogColor, d);
+	}
 	public void setAmbientLight(float a) {
 		start();
 		

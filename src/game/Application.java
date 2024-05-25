@@ -114,8 +114,12 @@ public class Application {
 			renderer.prepare();
 			
 			shader.start();
+			
 			shader.loadViewMatrix(camera);
-
+			shader.loadFogDensity(0.002f);
+			//shader.loadFogColor(new Vector3f(Renderer.R, Renderer.G, Renderer.B));
+			shader.loadFogColor(new Vector3f(Renderer.R, Renderer.G, Renderer.B));
+			
 			shader.loadRepeatScale(1);
 
 			renderer.render(grass, shader);

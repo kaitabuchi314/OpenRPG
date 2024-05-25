@@ -11,6 +11,8 @@ uniform sampler2D textureSampler;
 uniform vec3 lightColor;
 uniform float ambientLight;
 uniform float repeatScale;
+uniform float fogDensity;
+uniform vec3 fogColor;
 
 void main(void) {
 	
@@ -26,11 +28,14 @@ void main(void) {
 	if (tx.a > 0.5) {
 		float tsc = distance(vertPos, vec4(0,0,0,0));
 		
+		vec4 fog = vec4(tsc*fogColor.x, tsc*fogColor.y, tsc*fogColor.z, 1);
+		
 		out_Color = vec4(diffuse,1.0)*tx;
 		out_Color.a = 1;
-		out_Color.r += tsc/1400;
-		out_Color.g += tsc/800;
-		out_Color.b += tsc/400;
+		out_Color += fog*fogDensity;
+		//out_Color.r += tsc/1400;
+		//out_Color.g += tsc/800;
+		//out_Color.b += tsc/400;
 		
 	} else {
 		discard;
