@@ -7,6 +7,7 @@ import entities.Entity;
 import game.collision.Box;
 import game.collision.CollidableEntity;
 import game.collision.CollisionWorld;
+import game.terrain.Terrain;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.Loader;
@@ -25,8 +26,8 @@ public class Player extends CollidableEntity {
 	int time = 0;
 
 
-	public Player(StaticShader shader, Renderer renderer, Loader loader) {
-		super(null, new Vector3f(0, 0, 0), 0, 0, 0, 1);
+	public Player(StaticShader shader, Renderer renderer, Loader loader, Terrain main) {
+		super(null, new Vector3f(0, main.getHeightAtPoint(0, 0), 0), 0, 0, 0, 1);
 		
 		this.renderer = renderer;
 		this.loader = loader;
@@ -48,7 +49,7 @@ public class Player extends CollidableEntity {
 		name = "PLAYER";
 	}
 	
-	public void update() {
+	public void update(Terrain activeTerrain) {
 		float gravity = 0.06f;
 		time++;
 
@@ -64,8 +65,9 @@ public class Player extends CollidableEntity {
 
 		velocity.y -= gravity;
 		
+		float terrainHeight = activeTerrain.getHeightAtPoint(position.x, position.z);
 		//temp ground collision
-		if (Maths.addVector(position, velocity).y < 0) {
+		if (Maths.addVector(position, velocity).y < terrainHeight) {
 			velocity.y = 0;
 		}
 
@@ -73,6 +75,9 @@ public class Player extends CollidableEntity {
 		
 		manageCollisions(name);
 		
+		if (position.y < terrainHeight) {
+			position.y = terrainHeight;
+		}
 	}
 
 	void manageInput() {
@@ -91,10 +96,10 @@ public class Player extends CollidableEntity {
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			if (velocity.y == 0) {
+			//if (velocity.y == 0) {
 				jumping = true;
 				time = 0;
-			}
+		//	}
 		}
 	}
 	

@@ -61,9 +61,9 @@ public class Application {
 		
 		shader.addLight(light);
 		
-		terrain = new Terrain(loader, new Vector3f(0,0,0), 10);
+		terrain = new Terrain(loader, new Vector3f(-250,0,-250), 10);
 		
-		player = new Player(shader, renderer, loader);
+		player = new Player(shader, renderer, loader, terrain);
 
 		camera = new FollowCamera(player, new Vector3f(0, 0, 0), 0, 0, 0) ;
 		
@@ -106,7 +106,7 @@ public class Application {
 			//testEntity.velocity.x -= 0.00005f;
 			testEntity.position = Maths.addVector(testEntity.position, testEntity.velocity);
 			testEntity.manageCollisions("TestEntity");
-			player.update();
+			player.update(terrain);
 			camera.move();
 			//rendering
 			

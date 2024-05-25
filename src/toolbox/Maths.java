@@ -1,6 +1,7 @@
 package toolbox;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
@@ -68,5 +69,39 @@ public class Maths {
         float roll = 0; // Roll will be assumed as 0
 
         return new Vector3f(pitch, yaw, roll);
+    }
+    
+    public static float getTerrainHeight(float[] terrainVertices, int width, float x, float z) {
+        float height = 0;
+        float bestDist = Float.MAX_VALUE;
+
+        for (int i = 0; i < terrainVertices.length; i += 3) {
+            Vector3f position = new Vector3f(terrainVertices[i], terrainVertices[i+1], terrainVertices[i+2]);
+            float dist = distanceXZ(x, z, position.x, position.z);
+            if (dist < bestDist) {
+                bestDist = dist;
+                height = position.y;
+            }
+        }
+        System.out.println(height);
+        return height;
+    }
+
+    public static float distanceXZ(float x1, float z1, float x2, float z2) {
+        float dx = x1 - x2;
+        float dz = z1 - z2;
+        return (float) Math.sqrt(dx * dx + dz * dz);
+    }
+
+    public static float baryCentric(Vector3f p1, Vector3f p2, Vector3f p3, Vector2f pos) {
+        float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
+        float l1 = ((p2.z - p3.z) * (pos.x - p3.x) + (p3.x - p2.x) * (pos.y - p3.z)) / det;
+        float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
+        float l3 = 1.0f - l1 - l2;
+        return l1 * p1.y + l2 * p2.y + l3 * p3.y;
+    }
+    
+    public static double map(double n, double start1, double stop1, double start2, double stop2) {
+        return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
     }
 }
