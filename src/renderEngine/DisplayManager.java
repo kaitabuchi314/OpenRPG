@@ -17,16 +17,21 @@ public class DisplayManager {
 		
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
 		
+		DisplayMode d = Display.getDesktopDisplayMode();
+
 		try {
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			//Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.setDisplayModeAndFullscreen(d);
+
 			Display.create(new PixelFormat(), attribs);
 			Display.setTitle("Our First Display");
 			Display.setResizable(true);
+			
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		
-		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glViewport(0, 0, d.getWidth(), d.getHeight());
 		
 	}
 	

@@ -1,5 +1,6 @@
 package game;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -140,6 +141,9 @@ public class Application {
 			
 			DisplayManager.updateDisplay();
 			
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				break;
+			}
 		}
 		
 	}
