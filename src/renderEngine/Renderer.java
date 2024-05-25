@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
@@ -18,7 +17,7 @@ import toolbox.Maths;
 
 public class Renderer {
 	
-	private static final float FOV = 90;
+	private static final float FOV = 70;
 	private static final float NEAR_PLANE = 0.001f;
 	private static final float FAR_PLANE = 1000;
 	
