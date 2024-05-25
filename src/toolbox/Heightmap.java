@@ -13,7 +13,7 @@ public class Heightmap {
         heightmap = ImageIO.read(new File(filePath));
     }
 
-    public int getHeightAt(int x, int y) {
+    public float getHeightAt(int x, int y) {
         // Center of the image
         int centerX = heightmap.getWidth() / 2;
         int centerY = heightmap.getHeight() / 2;
@@ -29,11 +29,19 @@ public class Heightmap {
 
         // Get the pixel value at (imgX, imgY)
         int rgb = heightmap.getRGB(imgX, imgY);
-
+        int rgb1 = heightmap.getRGB(imgX-1, imgY);
+        int rgb2 = heightmap.getRGB(imgX+1, imgY);
+        int rgb3 = heightmap.getRGB(imgX, imgY-1);
+        int rgb4 = heightmap.getRGB(imgX, imgY+1);
         // Assuming a grayscale image, so R = G = B
         int height = (rgb >> 16) & 0xFF; // Extract the red component (since R = G = B)
-        System.out.println(height/10);
-        return height/10;
+        int height1 = (rgb1 >> 16) & 0xFF; // Extract the red component (since R = G = B)
+        int height2 = (rgb2 >> 16) & 0xFF; // Extract the red component (since R = G = B)
+        int height3 = (rgb3 >> 16) & 0xFF; // Extract the red component (since R = G = B)
+        int height4 = (rgb4 >> 16) & 0xFF; // Extract the red component (since R = G = B)
+        
+        float average = (height+height1+height2+height3+height4)/5;
+        return average/10;
     }
 
 }
