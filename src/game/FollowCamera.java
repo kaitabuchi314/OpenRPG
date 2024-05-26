@@ -15,12 +15,13 @@ public class FollowCamera extends Camera {
     private float lastMouseX;
     private float lastMouseY;
 
-    
+    private float lastPlayerRotY;
 
     
     public FollowCamera(Player player, Vector3f position, float pitch, float yaw, float roll) {
         super(position, pitch, yaw, roll);
         this.player = player;
+        lastPlayerRotY = player.getRotY();
     }
 
     @Override
@@ -29,8 +30,8 @@ public class FollowCamera extends Camera {
         handleMouseInput();
         if (isDragging) {
             calculatePitch();
-            calculateAngleAroundPlayer();
         }
+        calculateAngleAroundPlayer();
 
         float horizontalDistance = calculateHorizontalDistance();
         float verticalDistance = calculateVerticalDistance();
@@ -62,7 +63,6 @@ public class FollowCamera extends Camera {
         float zoomLevel = Mouse.getDWheel() * 0.006f;
         distanceFromPlayerX -= zoomLevel;
         distanceFromPlayerY -= zoomLevel;
-
     }
 
     private void calculatePitch() {
@@ -74,11 +74,14 @@ public class FollowCamera extends Camera {
     }
 
     private void calculateAngleAroundPlayer() {
+    	float angleChange = 0;
         if (isDragging) {
-            float angleChange = (lastMouseX - getMouseX()) * 0.3f;
-            angleAroundPlayer -= angleChange;
+            angleChange = (lastMouseX - getMouseX()) * 0.3f;
             lastMouseX = getMouseX();
         }
+        angleChange += lastPlayerRotY-player.getRotY();
+        lastPlayerRotY = player.getRotY();
+        angleAroundPlayer -= angleChange;
     }
 
     public void handleMouseInput() {
