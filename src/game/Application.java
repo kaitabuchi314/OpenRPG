@@ -37,8 +37,10 @@ public class Application {
 	Entity grass;
 	Panel sprite;
 	Panel sprite2;
-
+	float timeChange = 0;
 	Shader2D shader2D;
+	float time = 0;
+	boolean day = false;
 	public void run() {
 		init();
 		loop();
@@ -59,7 +61,6 @@ public class Application {
 		
 		light = new Light(new Vector3f(2000,2000,2000), new Vector3f(2f,2f,2f));
 		
-		shader.addLight(light);
 		
 		terrain = new Terrain(loader, new Vector3f(-250,0,-250), 10);
 		
@@ -109,12 +110,26 @@ public class Application {
 			player.update(terrain);
 			camera.move();
 			//rendering
+			if (time < -1.7 || day) {
+				timeChange = 0.0005f;
+				day = true;
+			} else {
+				timeChange = -0.00009f;
+			}
+			if (time > 0.17f) {
+				day = false;
+			}
+			time += timeChange;
+			light.setColor(Maths.subVector(light.getColor(), new Vector3f(timeChange,timeChange,timeChange)));
+			Renderer.R += timeChange;
+			Renderer.G += timeChange;
+			Renderer.B += timeChange;
 			
-
+			
 			renderer.prepare();
 			
 			shader.start();
-			
+			shader.loadLight(light);
 			shader.loadViewMatrix(camera);
 			shader.loadFogDensity(0.002f);
 			//shader.loadFogColor(new Vector3f(Renderer.R, Renderer.G, Renderer.B));
