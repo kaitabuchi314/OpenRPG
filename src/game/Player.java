@@ -66,7 +66,7 @@ public class Player extends CollidableEntity {
 		time++;
 
 		manageInput();
-
+		boolean falling = false;
 
 		if (jumping && time < 40) {
 			velocity.y += gravity + 0.08;
@@ -90,6 +90,13 @@ public class Player extends CollidableEntity {
 		
 		if (position.y < terrainHeight) {
 			position.y = terrainHeight;
+		} else if (position.y > terrainHeight+0.7f) {
+			falling = true;
+		}
+		if (jumping) {
+			frame = 0;
+		} else if (falling) {
+			frame = 4;
 		}
 	}
 
@@ -117,9 +124,7 @@ public class Player extends CollidableEntity {
 		}
 		frame %= 4;
 
-		if (velocity.y < 0) {
-			frame = 4;
-		}
+
 	}
 	
 	
