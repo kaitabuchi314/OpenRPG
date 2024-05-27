@@ -116,7 +116,7 @@ public class Application {
 			} else {
 				timeChange = -0.00009f;
 			}
-			if (time > 0.17f) {
+			if (time > 0.352f) {
 				day = false;
 			}
 			time += timeChange;

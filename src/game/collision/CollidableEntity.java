@@ -32,7 +32,6 @@ public class CollidableEntity extends Entity {
 		renderer.render(this, baseShader);
 	}
 	public void manageCollisions(String NAME) {
-
 		for (CollidableEntity e : CollisionWorld.GetAllCollidableEntities()) {
 			
 			if (e.name != NAME) {
